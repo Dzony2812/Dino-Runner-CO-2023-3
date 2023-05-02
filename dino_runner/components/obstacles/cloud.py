@@ -6,7 +6,7 @@ class Cloud:
     Y_POS = 1200
     def __init__(self):
         self.image = CLOUD
-        self.width = self.image.get_width ()
+        self.cloud_rect = self.image.get_width()
         self.x = SCREEN_WIDTH + random.randint (800, 1000)
         self.y = random.randint(50, 100)
         self.cloud_speed = 14
@@ -14,7 +14,7 @@ class Cloud:
         
     def update(self):
         self.x -= self.cloud_speed
-        if self.x < - self.width:
+        if self.x < - self.cloud_rect:
             self.x = SCREEN_WIDTH + random.randint(2500, 3000)
             self.y = random.randint(50, 100)
 

@@ -4,7 +4,7 @@ import random
 from dino_runner.utils.constants import BG, ICON, SCREEN_HEIGHT, SCREEN_WIDTH, TITLE, FPS, CLOUD
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.cloud import Cloud
-
+from dino_runner.components.obstacles.obstacle_manager import ObstacleManager
 
 class Game:
     def __init__(self):
@@ -21,6 +21,7 @@ class Game:
         self.y_pos_cloud = random.randint(50, 100)
         self.player = Dinosaur()
         self.cloud = Cloud()
+        self.obstacle_manager = ObstacleManager()
 
     def run(self):
         # Game loop: events - update - draw
@@ -40,6 +41,9 @@ class Game:
         user_input = pygame.key.get_pressed()
         self.player.update(user_input)
         self.cloud.update()
+        self.obstacle_manager.update(self.game_speed, self.player)
+        if self.player.dino_dead:
+            self.playing = False
 
     def draw(self):
         self.clock.tick(FPS)
@@ -47,6 +51,7 @@ class Game:
         self.draw_background()
         self.player.draw(self.screen)
         self.cloud.draw(self.screen)
+        self.obstacle_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
